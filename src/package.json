@@ -1,22 +1,55 @@
 {
   "name": "tok2",
   "version": "1.0.0",
-  "description": "tok2 game for game design 2020 assignment",
+  "description": "tok2 game ",
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build-screen": "webpack --config webpack.screen.config.js",
+    "build-controller": "webpack --config webpack.controller.config.js"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "jest": "^25.1.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aditbro/tok2.git"
   },
+  "keywords": [
+    "nodejs",
+    "node",
+    "react",
+    "reactjs"
+  ],
+  "author": "M. Aditya Farizki, Daniel Yudianto, Maha William Candra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aditbro/tok2/issues"
+  },
+  "homepage": "https://github.com/aditbro/tok2#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.8.3",
+    "eslint": "^6.8.0",
     "finalhandler": "^1.1.2",
-    "jslint": "^0.12.1",
+    "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
+    "popper.js": "^1.16.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "serve-static": "^1.14.1",
-    "websocket": "^1.0.31"
+    "webpack": "^4.41.6",
+    "websocket": "^1.0.31",
+    "ws": "^7.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/code-frame": "^7.8.3",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "bootstrap": "^4.4.1",
+    "css-loader": "^3.4.2",
+    "jest": "^25.1.0",
+    "style-loader": "^1.1.3",
+    "webpack-cli": "^3.3.11"
   }
 }

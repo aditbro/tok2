@@ -15,10 +15,7 @@ exports.addStatic = function (basePath) {
 }
 
 exports.routes = function (req, res) {
-  let method = req.method;
-  let path = req.url;
-
-  if(path.split('/')[1] === staticPath) {
+  if(req.url.split('/')[1] === staticPath) {
     staticServer(req, res, finalhandler(req, res));
   } else {
     execRoute(req, res);
@@ -26,10 +23,13 @@ exports.routes = function (req, res) {
 }
 
 execRoute = function (req, res) {
+  let method = req.method;
+  let path = req.url;
+  
   try {
     routesCallback[method+path](req, res);
   } catch(err) {
-    res.writeHead(400);
+    res.writeHead(404);
     res.write("404 NOT FOUND");
     res.end();
   }
