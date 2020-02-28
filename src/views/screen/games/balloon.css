@@ -1,0 +1,18 @@
+.player-space {
+    height: 100vh;
+    border: 2px solid black;
+}
+
+.balloon {
+    position: absolute;
+    z-index: 1;
+    border-radius: 50%;
+    bottom: 10vh;
+    background-color: black;
+}
+
+.character {
+    position: absolute;
+    bottom: 10vh;
+    background-color: yellow;
+}

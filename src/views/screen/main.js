@@ -6,12 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 window.React = React;
 
-var currentGame = BalloonGame;
+var CurrentGame = BalloonGame;
 
-function container() {
-  return <div class="container-fluid">
-    <currentGame />
-  </div>
+class Container extends React.Component {
+  render() {
+    return <div className="container-fluid">
+      <CurrentGame />
+    </div>
+  }
 }
 
-ReactDOM.render(container(), document.querySelector("#root"));
+ReactDOM.render(<Container />, document.querySelector("#root"));

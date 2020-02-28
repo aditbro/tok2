@@ -1,9 +1,10 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   entry: path.resolve(__dirname, 'views/screen/main.js'),
   output: {
-    path: path.resolve(__dirname, 'static/screen/js/'),
+    path: path.resolve(__dirname, 'static/screen/'),
     filename: 'bundle.js'
   },
   resolve: {
@@ -29,5 +30,5 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
     ]
-  }
+  },
 };

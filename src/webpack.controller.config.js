@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   entry: path.resolve(__dirname, 'views/controller/main.js'),
   output: {
     path: path.resolve(__dirname, 'static/controller/'),
@@ -9,7 +10,7 @@ module.exports = {
   resolve: {
     modules: [
       path.resolve(__dirname, 'node_modules'),
-      path.resolve(__dirname, 'views/screen/')
+      path.resolve(__dirname, 'views/controller/')
     ],
     extensions: ['.js', '.json', '.jsx']
   },
@@ -29,5 +30,5 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
     ]
-  }
+  },
 };

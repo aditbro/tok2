@@ -1,6 +1,6 @@
 var router = require('./middlewares/router')
 
-router.addRoute('GET','/mobile', function (req, res) {
+router.addRoute('GET','/controller', function (req, res) {
   res.writeHead(301, {
     "Location": "/static/controller/main.html"
   })
