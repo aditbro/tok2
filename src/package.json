@@ -4,7 +4,7 @@
   "description": "tok2 game ",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --collect-coverage",
     "start": "node server.js",
     "build-screen": "webpack --config webpack.screen.config.js",
     "build-controller": "webpack --config webpack.controller.config.js"
@@ -45,10 +45,13 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
+    "axios": "^0.19.2",
     "babel-loader": "^8.0.6",
     "bootstrap": "^4.4.1",
     "css-loader": "^3.4.2",
     "jest": "^25.1.0",
+    "jest-websocket-mock": "^2.0.2",
+    "mock-socket": "^9.0.3",
     "style-loader": "^1.1.3",
     "webpack-cli": "^3.3.11"
   }
