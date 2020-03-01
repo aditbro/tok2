@@ -14,6 +14,8 @@ class GameController {
       this.addPlayer(ws);
     } else if(msg.action == 'game_action') {
       this.controllGame(ws, msg);
+    } else if(msg.action == 'start_game') {
+      this.assignGame(BalloonGame);
     }
   }
 
@@ -21,23 +23,19 @@ class GameController {
     this.screen = { socket: ws }
     let success_response = { message: "screen registered" };
     this.screen.socket.send(JSON.stringify(success_response));
-
-    /* TEMPORARY SECTION FOR TESTING */
-    if(this.screen) {
-      this.assignGame(BalloonGame.BalloonGame);
-    }
   }
 
   addPlayer(ws) {
     if(this.players.length >= 3) {
-      response = { message: "player registration rejected" };
+      let response = { message: "player registration rejected" };
       ws.send(JSON.stringify(response));
+      return null;
     }
 
     let player = this.createNewPlayer(ws);
 
     this.players.push(player);
-    response = {
+    let response = {
       message: "player registration accepted",
       id: player.id,
       action: "assign_id"
@@ -68,4 +66,4 @@ class GameController {
   }
 }
 
-exports.GameController = GameController;
+module.exports = GameController;

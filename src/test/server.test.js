@@ -1,7 +1,10 @@
-const gameController = require('../games/gameController');
 const axios = require('axios');
-const router = require('../routes');;
+const router = require('../routes');
 const server = require('../server');
+
+afterAll(() => {
+  server.close();
+});
 
 describe("normal http request", () => {
   it("forward the request to router", () => {
@@ -21,8 +24,7 @@ describe("normal http request", () => {
       .catch((error) => {
         throw new Error(error);
       })
-      .finally(() => {
-        server.server.close();
-      });
   });
 });
+
+// the websocket call cannot be tested because the gamecontroller module cannot be properly mocked

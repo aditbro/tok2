@@ -1,10 +1,9 @@
 const http = require('http');
 const WebSocket = require('ws');
-const auth = require('./middlewares/auth');
 const router = require('./routes');
-const gameController = require('./games/gameController');
+const GameController = require('./games/gameController');
 
-controller = new gameController.GameController();
+controller = new GameController();
 
 const server = http.createServer(function (req, res) {
   router.routes(req, res);
@@ -29,4 +28,4 @@ server.on('upgrade', function upgrade(request, socket, head) {
 
 server.listen(8080);
 
-exports.server = server;
+module.exports = server;
