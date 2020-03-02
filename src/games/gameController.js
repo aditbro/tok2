@@ -1,4 +1,4 @@
-const BalloonGame = require('./balloon/balloon');
+const BalloonGame = require('./balloon');
 
 class GameController {
   constructor() {
