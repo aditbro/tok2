@@ -10,12 +10,23 @@ export default class BalloonGame extends React.Component {
       players: []
     }
 
-    for(let i = 0; i < 3; i++) {
+    for(let i = 0; i < props.players.length; i++) {
       this.state.players.push({
-        score: 0,
-        balloonState: 1,
-        characterState: 1
+        id: this.props.players[i].id,
+        score: this.props.players[i].score,
+        balloonState: this.props.players[i].balloonState,
+        balloonScore: this.props.players[i].balloonScore,
+        characterState: this.props.players[i].balloonScore
       })
+    }
+
+    this.props.client.ongamemessage = this.updatePlayerState;
+  }
+
+  updatePlayerState(msg) {
+    let players = this.state.players.slice();
+    for(let i = 0; i < msg.players.length; i++) {
+
     }
   }
 

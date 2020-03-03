@@ -29,11 +29,13 @@ describe('#message mobile:pump', () => {
     }
     let game = new BalloonGame(player, screen, endCallback);
     let expectedScreenMessage = {
+      action: 'game_action',
       players: [
         {
           id: 1,
           balloonState: 1,
           balloonScore: 0,
+          characterState: 1,
           score: 0
         }
       ]
