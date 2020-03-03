@@ -8,7 +8,7 @@ export default class BalloonGame extends React.Component {
 
     this.state = {
       players: []
-    }
+    };
 
     for(let i = 0; i < props.players.length; i++) {
       this.state.players.push({
@@ -19,24 +19,33 @@ export default class BalloonGame extends React.Component {
         characterState: this.props.players[i].balloonScore
       })
     }
+    console.log(this.state);
 
-    this.props.client.ongamemessage = this.updatePlayerState;
+    this.props.comm;
+    this.props.comm.ongamemessage = (players) => {
+      this.updatePlayerState(players);
+    };
   }
 
   updatePlayerState(msg) {
     let players = this.state.players.slice();
-    for(let i = 0; i < msg.players.length; i++) {
-
-    }
+    this.setState({
+      players: players
+    });
   }
 
   renderPlayerSpace(id) {
-    return <PlayerSpace
-      id={"player-" + id.toString()}
-      score={this.state.players[id].score}
-      balloonState={this.state.players[id].balloonState}
-      characterState={this.state.players[id].characterState}
-    />
+    console.log(id);
+    if(this.props.players[id]){
+      return <PlayerSpace
+        id={"player-" + id.toString()}
+        score={this.props.players[id].score}
+        balloonState={this.props.players[id].balloonState}
+        characterState={this.props.players[id].characterState}
+      />
+    } else {
+      return null;
+    }
   }
 
   render() {

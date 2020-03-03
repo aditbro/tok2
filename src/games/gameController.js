@@ -25,6 +25,21 @@ class GameController {
     this.screen.socket.send(JSON.stringify(success_response));
   }
 
+  registerPlayersToScreen() {
+    let msg = {
+      action: 'register_player',
+      players: []
+    }
+    for(let i = 0; i < this.players.length; i++) {
+      msg.players.push({
+        id: this.players[i].id,
+        score: this.players[i].score
+      })
+    }
+
+    this.screen.socket.send(JSON.stringify(msg));
+  }
+
   addPlayer(ws) {
     if(this.players.length >= 3) {
       let response = { message: "player registration rejected" };
@@ -41,6 +56,7 @@ class GameController {
       action: "assign_id"
     }
     player.socket.send(JSON.stringify(response));
+    this.registerPlayersToScreen();
   }
 
   handleGameFinish(score) {

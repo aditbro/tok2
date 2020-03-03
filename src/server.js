@@ -1,11 +1,17 @@
-const http = require('http');
+const http = require('https');
 const WebSocket = require('ws');
+const fs = require('fs');
 const router = require('./routes');
 const GameController = require('./games/gameController');
 
 controller = new GameController();
 
-const server = http.createServer(function (req, res) {
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+const server = http.createServer(options, function (req, res) {
   router.routes(req, res);
 });
 const wss = new WebSocket.Server({ noServer: true });

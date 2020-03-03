@@ -12,32 +12,42 @@ var CurrentGame = BalloonGame;
 class Container extends React.Component {
   constructor(props) {
     super(props);
+    this.client = client;
+    this.client.onmessage = (message) => {
+      this.handleMessage(message);
+    };
     this.state = {
-      client: client,
-      players: players
-    }
-  }
-
-  handleMessage(msg) {
-    msg = JSON.parse(msg);
-    if(msg.action == 'game_action') {
-      this.state.client.ongamemessage(msg);
-    } else if(msg.action == 'register_player') {
-      this.registerPlayer(msg.players);
+      players: []
     }
   }
 
   registerPlayer(players) {
+    let ply = this.state.players.slice();
     for(let i = 0; i < players.length; i++){
-      this.state.players[i].id = players[i].id;
-      this.state.players[i].score = players[i].score;
+      ply.push({
+        id: players[i].id,
+        score: players[i].score
+      });
+    }
+
+    this.setState({
+      players: ply
+    });
+  }
+
+  handleMessage(msg) {
+    msg = JSON.parse(msg.data);
+    if(msg.action == 'game_action') {
+      this.client.ongamemessage(msg);
+    } else if(msg.action == 'register_player') {
+      this.registerPlayer(msg.players);
     }
   }
 
   render() {
     return (
       <div className="container-fluid">
-        <CurrentGame comm={this.client} players={this.players}/>
+        <CurrentGame comm={this.client} players={this.state.players}/>
       </div>
     );
   }

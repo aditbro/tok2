@@ -18,23 +18,36 @@ describe('#GameController', () => {
 
   describe('msg: add_player', () => {
     it('add player socket to the game', () => {
-      let addMsg = { action: 'add_player' }
-      let mockPlayer = {
-        send: jest.fn()
-      }
+      let addPlyMsg = { action: 'add_player' }
+      let addScrMsg = { action: 'add_screen' }
+      let mockPlayer = { send: jest.fn() }
+      let mockScreen = { send: jest.fn() }
       let controller = new GameController();
-      controller.receiveMessage(mockPlayer, addMsg);
+      controller.receiveMessage(mockScreen, addScrMsg);
+      controller.receiveMessage(mockPlayer, addPlyMsg);
 
-      expectedMessage = {
+      expectedConMessage = {
         message: "player registration accepted",
         id: 1,
         action: "assign_id"
       };
-      expect(mockPlayer.send).toHaveBeenCalledWith(JSON.stringify(expectedMessage));
+      expectedScrMessage = {
+        action: 'register_player',
+        players: [
+          {
+            id: 1,
+            score: 0
+          }
+        ]
+      }
+      expect(mockPlayer.send).toHaveBeenCalledWith(JSON.stringify(expectedConMessage));
+      expect(mockScreen.send).toHaveBeenCalledWith(JSON.stringify(expectedScrMessage));
     });
 
     it('rejects when there are 3 players already', () => {
       let addMsg = { action: 'add_player' }
+      let addScrMsg = { action: 'add_screen' }
+      let mockScreen = { send: jest.fn() }
       let mockPlayer = {
         send: jest.fn()
       }
@@ -42,6 +55,7 @@ describe('#GameController', () => {
         send: jest.fn()
       }
       let controller = new GameController();
+      controller.receiveMessage(mockScreen, addScrMsg);
       controller.receiveMessage(mockPlayer, addMsg);
       controller.receiveMessage(mockPlayer, addMsg);
       controller.receiveMessage(mockPlayer, addMsg);
@@ -82,8 +96,8 @@ describe('#GameController', () => {
       });
 
       let controller = new GameController();
-      controller.receiveMessage(mockPlayer, addPlayerMsg);
       controller.receiveMessage(mockScreen, addScreenMsg);
+      controller.receiveMessage(mockPlayer, addPlayerMsg);      
       controller.assignGame(mockGame);
       controller.receiveMessage(jest.fn(), gameMessage);
       expect(mockPlayer.send).toHaveBeenCalledWith(JSON.stringify(gameMessage));
