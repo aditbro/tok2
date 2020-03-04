@@ -3,11 +3,14 @@ class BalloonGame {
     this.players = players;
     this.screen = screen;
     this.endCallback = endCallback;
-    this.playerScore = Array(players.length).fill({
-      balloonState: 0,
-      balloonScore: 0,
-      characterState: 0
-    });
+    this.playerScore = []
+    for(let i = 0; i < players.length; i++){
+      this.playerScore.push({
+        balloonState: 0,
+        balloonScore: 0,
+        characterState: 0
+      });
+    };
   }
 
   receiveMessage(ws, msg) {

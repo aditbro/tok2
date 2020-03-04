@@ -22,9 +22,19 @@ export default class MobileDisplay extends React.Component {
 
   }
 
+  startGame() {
+    let startMessage = {
+      action: "start_game"
+    };
+    client.send(JSON.stringify(startMessage));
+  }
+
   render() {
     return (
-      <div>{this.state.currentPoint}</div>
+      <div>
+        <div>{this.state.currentPoint}</div>
+        <button className="btn btn-primary" onClick={() => this.startGame()}>Start Game</button>
+      </div>
     );
   }
 

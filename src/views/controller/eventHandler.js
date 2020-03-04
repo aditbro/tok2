@@ -4,6 +4,7 @@ var async = require('async');
 let diffThreshold = 20
 
 var display = new MobileDisplay();
+var playerId;
 
 let stateBuffer = []
 function handleMotion(event) {
@@ -32,9 +33,21 @@ async.forever(handleScoring, function (err) {
 })
 
 function addPoint() {
-  let pointMessage = { action: "game_action", action_type: "pump" }
+  let pointMessage = {
+    action: "game_action",
+    action_type: "pump",
+    id: playerId
+  }
   display.addPoint();
   client.send(JSON.stringify(pointMessage));
 }
+
+client.onmessage = function(msg) {
+  msg = JSON.parse(msg.data);
+  if(msg.action === 'assign_id') {
+    playerId = msg.id;
+  }
+}
+
 
 export default handleMotion;

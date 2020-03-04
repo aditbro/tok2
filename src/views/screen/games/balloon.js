@@ -33,6 +33,7 @@ export default class BalloonGame extends React.Component {
   }
 
   renderPlayerSpace(id) {
+    console.log(this.state.players)
     if(this.state.players[id]){
       return <PlayerSpace
         id={"player-" + (id + 1)}
@@ -125,8 +126,8 @@ class Character extends React.Component {
         id={this.props.id}
         className="character"
         style={{
-          height: 400,
-          width: 200,
+          height: 700,
+          width: 350,
           backgroundImage: "url(" + characterImage + ")",
           backgroundSize: "contain"
         }}

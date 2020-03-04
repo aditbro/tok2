@@ -6,26 +6,29 @@
 .balloon {
     position: absolute;
     z-index: 1;
-    top: 49%;
+    top: 64%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 .character {
     position: absolute;
-    top: 60%;
+    top: 62%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 #player-1 {
     background-image: url("/static/img/bg1.jpg");
+    background-size: contain;
 }
 
 #player-2 {
     background-image: url("/static/img/bg2.jpg");
+    background-size: contain;
 }
 
 #player-3 {
     background-image: url("/static/img/bg3.jpg");
+    background-size: contain;
 }
