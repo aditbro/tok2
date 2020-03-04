@@ -6,13 +6,26 @@
 .balloon {
     position: absolute;
     z-index: 1;
-    border-radius: 50%;
-    bottom: 10vh;
-    background-color: black;
+    top: 49%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .character {
     position: absolute;
-    bottom: 10vh;
-    background-color: yellow;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#player-1 {
+    background-image: url("/static/img/bg1.jpg");
+}
+
+#player-2 {
+    background-image: url("/static/img/bg2.jpg");
+}
+
+#player-3 {
+    background-image: url("/static/img/bg3.jpg");
 }

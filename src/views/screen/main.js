@@ -37,10 +37,12 @@ class Container extends React.Component {
 
   handleMessage(msg) {
     msg = JSON.parse(msg.data);
+    console.log(msg);
     if(msg.action == 'game_action') {
-      this.client.ongamemessage(msg);
+      this.client.ongamemessage(msg.players);
     } else if(msg.action == 'register_player') {
       this.registerPlayer(msg.players);
+      this.client.ongamemessage(msg.players)
     }
   }
 

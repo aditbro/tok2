@@ -20,8 +20,12 @@ const wss = new WebSocket.Server({ noServer: true });
 wss.on('connection', function connection(ws, request) {
   ws.on('message', function message(msg) {
     console.log(`Received message ${msg}`);
-    msg = JSON.parse(msg);
-    controller.receiveMessage(ws, msg);
+    try {
+      msg = JSON.parse(msg);
+      controller.receiveMessage(ws, msg); 
+    } catch(err) {
+      console.log(err);
+    }
   });
 });
 
