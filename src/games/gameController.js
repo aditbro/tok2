@@ -37,7 +37,11 @@ class GameController {
       })
     }
 
-    this.screen.socket.send(JSON.stringify(msg));
+    try {
+      this.screen.socket.send(JSON.stringify(msg));
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   addPlayer(ws) {

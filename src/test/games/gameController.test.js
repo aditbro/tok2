@@ -6,7 +6,7 @@ describe('#GameController', () => {
       let addMsg = { action: 'add_screen' }
       let mockScreen = {
         send: function(msg) {
-          expectedMessage = {message:"screen registered"};
+          expectedMessage = { message:"screen registered" };
           expect(msg).toBe(JSON.stringify(expectedMessage));
           done();
         }

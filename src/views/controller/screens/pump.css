@@ -1,0 +1,25 @@
+body {
+    background-color: pink !important;
+}
+
+#pump-title {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 5rem;
+}
+
+#pump-player-id {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#pump-btn-ok {
+    background-image: url("/static/img/pump-btn-ok.png");
+    background-size: contain;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 50vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
