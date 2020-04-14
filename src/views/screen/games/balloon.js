@@ -112,10 +112,19 @@ class Character extends React.Component {
   }
 
   getCharacterImage() {
-    if(this.props.state === 0) {
-      return "/static/img/char1.png";
-    } else {
-      return "/static/img/char3.png";
+    if (this.props.id === "player-1-character") {
+      if(this.props.state === 0) {
+        return "/static/img/Character/Boonie/1.png";
+      } else {
+        return "/static/img/Character/Boonie/3.png";
+      }
+    }
+    else {
+      if(this.props.state === 0) {
+        return "/static/img/Character/Jojo/1.png";
+      } else {
+        return "/static/img/Character/Jojo/3.png";
+      }
     }
   }
 

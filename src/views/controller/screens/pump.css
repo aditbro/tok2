@@ -14,7 +14,7 @@ body {
 }
 
 #pump-btn-ok {
-    background-image: url("/static/img/pump-btn-ok.png");
+    background-image: url("/static/img/Button/ok.png");
     background-size: contain;
     width: 400px;
     height: 400px;
