@@ -7,7 +7,7 @@ export default class BalloonGame extends React.Component {
     super(props);
 
     this.state = {
-      players: []
+      players: this.getPlayersNewState(this.props.players)
     };
 
     this.comm = this.props.comm;
@@ -18,6 +18,12 @@ export default class BalloonGame extends React.Component {
   }
 
   updatePlayerState(players) {
+    this.setState({
+      players: getPlayersNewState(players)
+    });
+  }
+
+  getPlayersNewState(players) {
     let ply = []
     for(let i = 0; i < players.length; i++) {
       ply.push({
@@ -28,9 +34,8 @@ export default class BalloonGame extends React.Component {
         characterState: players[i].characterState ? players[i].characterState : 0,
       });
     }
-    this.setState({
-      players: ply
-    });
+
+    return ply;
   }
 
   renderPlayerSpace(id) {

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BalloonGame from './screens/balloon.js';
@@ -9,13 +10,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 window.React = React;
 
 var gameSequence = [
-  PlayerRegistration,
   BalloonGame
 ];
 
 var gameSequenceIndex = 0;
 
-var CurrentScreen = gameSequence[gameSequenceIndex];
+var CurrentScreen = PlayerRegistration;
 
 class Container extends React.Component {
   constructor(props) {
@@ -51,6 +51,15 @@ class Container extends React.Component {
     } else if(msg.action == 'register_player') {
       this.registerPlayer(msg.players);
       this.client.ongamemessage(msg)
+    } else if(msg.action == 'start_game') {
+      $('body').fadeOut("slow", "linear", () => {
+        CurrentScreen = gameSequence[0];
+        this.forceUpdate();
+        console.log(CurrentScreen);
+        console.log(this.state)
+      });
+
+      $('body').fadeIn("fast", "linear");
     }
   }
 

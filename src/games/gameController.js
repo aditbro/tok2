@@ -18,6 +18,9 @@ class GameController {
     } else if(msg.action == 'start_game') {
       this.state = 'in_game';
       this.assignGame(BalloonGame);
+      this.screen.socket.send(JSON.stringify(
+        {"action": "start_game"}
+      ))
     }
   }
 
