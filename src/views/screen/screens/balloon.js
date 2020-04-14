@@ -11,7 +11,8 @@ export default class BalloonGame extends React.Component {
     };
 
     this.comm = this.props.comm;
-    this.comm.ongamemessage = (players) => {
+    this.comm.ongamemessage = (msg) => {
+      let players = msg.players;
       this.updatePlayerState(players);
     };
   }

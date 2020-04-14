@@ -5,6 +5,7 @@ class GameController {
     this.players = [];
     this.screen;
     this.currentGame;
+    this.state = 'registering_player';
   }
 
   receiveMessage(ws, msg) {
@@ -15,6 +16,7 @@ class GameController {
     } else if(msg.action == 'game_action') {
       this.controllGame(ws, msg);
     } else if(msg.action == 'start_game') {
+      this.state = 'in_game';
       this.assignGame(BalloonGame);
     }
   }
@@ -39,13 +41,14 @@ class GameController {
 
     try {
       this.screen.socket.send(JSON.stringify(msg));
+      console.log(msg);
     } catch(e) {
       console.log(e);
     }
   }
 
   addPlayer(ws) {
-    if(this.players.length >= 3) {
+    if(this.players.length >= 3 || this.state != 'registering_player') {
       let response = { message: "player registration rejected" };
       ws.send(JSON.stringify(response));
       return null;

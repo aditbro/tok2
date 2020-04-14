@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BalloonGame from './games/balloon.js';
+import BalloonGame from './screens/balloon.js';
+import PlayerRegistration from './screens/playerRegistration.js'
 import client from './connection.js';
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 window.React = React;
 
-var CurrentGame = BalloonGame;
+var gameSequence = [
+  PlayerRegistration,
+  BalloonGame
+];
+
+var gameSequenceIndex = 0;
+
+var CurrentScreen = gameSequence[gameSequenceIndex];
 
 class Container extends React.Component {
   constructor(props) {
@@ -39,17 +47,31 @@ class Container extends React.Component {
     msg = JSON.parse(msg.data);
     console.log(msg);
     if(msg.action == 'game_action') {
-      this.client.ongamemessage(msg.players);
+      this.client.ongamemessage(msg);
     } else if(msg.action == 'register_player') {
       this.registerPlayer(msg.players);
-      this.client.ongamemessage(msg.players)
+      this.client.ongamemessage(msg)
     }
+  }
+
+  gameFinishedCallback(playersScore) {
+    let ply = this.state.players.slice();
+    for(let i = 0; i < playersScore.length; i++) {
+      ply[i].score += playersScore[i]
+    }
+
+    gameSequenceIndex++;
+    CurrentScreen = gameSequence[gameSequenceIndex];
+
+    this.setState({
+      players: ply
+    });
   }
 
   render() {
     return (
       <div className="container-fluid">
-        <CurrentGame comm={this.client} players={this.state.players}/>
+        <CurrentScreen comm={this.client} players={this.state.players}/>
       </div>
     );
   }
