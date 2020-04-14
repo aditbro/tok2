@@ -91,15 +91,6 @@ class Character extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  getCharacterImage() {
-    if(this.props.state === 0) {
-      return "/static/img/char1.png";
-    } else {
-      return "/static/img/char3.png";
-    }
-  }
-
   render() {
     let characterImage = this.getCharacterImage();
     return (

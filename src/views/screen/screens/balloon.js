@@ -121,9 +121,9 @@ class Character extends React.Component {
 
   getCharacterImage() {
     if(this.props.state === 0) {
-      return "/static/img/character/" + this.props.playerNum + "1.png";
+      return "/static/img/Character/" + this.props.playerNum + "/1.png";
     } else {
-      return "/static/img/character/" + this.props.playerNum + "3.png";
+      return "/static/img/Character/" + this.props.playerNum + "/3.png";
     }
   }
 
