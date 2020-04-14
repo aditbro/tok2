@@ -15,6 +15,14 @@ export default class BalloonGame extends React.Component {
       let players = msg.players;
       this.updatePlayerState(players);
     };
+    this.audio = new Audio('/static/img/sound/gamebgm.mp3');
+  }
+
+  playMusic() {
+    console.log(this.audio);
+    setTimeout(() => {
+      this.audio.play();
+    }, 500)
   }
 
   updatePlayerState(players) {
@@ -54,6 +62,7 @@ export default class BalloonGame extends React.Component {
   }
 
   render() {
+    this.playMusic();
     return (
       <div className="row">
         {this.renderPlayerSpace(0)}
@@ -89,10 +98,17 @@ class PlayerSpace extends React.Component {
 class Balloon extends React.Component {
   constructor(props) {
     super(props);
+    // this.audio = new Audio("/static/img/sound/balloonpumping.mp3");
   }
+
+  // playAudio() {
+  //   console.log(this.audio);
+  //   this.audio.play();
+  // }
 
   getBalloonImage() {
     let balloonNum = (this.props.state % 12) + 1;
+    // this.playAudio();
     return "/static/img/balloon/" + balloonNum + ".png";
   }
 
