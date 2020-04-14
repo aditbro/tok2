@@ -37,6 +37,7 @@ export default class BalloonGame extends React.Component {
     if(this.state.players[id]){
       return <PlayerSpace
         id={"player-" + (id + 1)}
+        playerNum={id + 1}
         score={this.state.players[id].score}
         balloonState={this.state.players[id].balloonState}
         characterState={this.state.players[id].characterState}
@@ -68,6 +69,7 @@ class PlayerSpace extends React.Component {
         <Character
           id={this.props.id + "-character"}
           state={this.props.characterState}
+          playerNum = {this.props.playerNum}
         />
         <Balloon 
           id={this.props.id + "-balloon"}
@@ -112,19 +114,10 @@ class Character extends React.Component {
   }
 
   getCharacterImage() {
-    if (this.props.id === "player-1-character") {
-      if(this.props.state === 0) {
-        return "/static/img/Character/Boonie/1.png";
-      } else {
-        return "/static/img/Character/Boonie/3.png";
-      }
-    }
-    else {
-      if(this.props.state === 0) {
-        return "/static/img/Character/Jojo/1.png";
-      } else {
-        return "/static/img/Character/Jojo/3.png";
-      }
+    if(this.props.state === 0) {
+      return "/static/img/Character/" + this.props.playerNum + "/1.png";
+    } else {
+      return "/static/img/Character/" + this.props.playerNum + "/3.png";
     }
   }
 
