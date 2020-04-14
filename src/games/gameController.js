@@ -21,6 +21,10 @@ class GameController {
       this.screen.socket.send(JSON.stringify(
         {"action": "start_game"}
       ))
+      this.players.forEach((player) => {
+        let msg = {"action": "change_screen", "screen": "pump"}
+        player.socket.send(JSON.stringify(msg));
+      })
     }
   }
 

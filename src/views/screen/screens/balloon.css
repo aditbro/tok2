@@ -13,8 +13,8 @@
 
 .character {
     position: absolute;
-    top: 62%;
-    left: 50%;
+    top: 59%;
+    left: 45%;
     transform: translate(-50%, -50%);
 }
 

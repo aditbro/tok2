@@ -19,7 +19,7 @@ export default class BalloonGame extends React.Component {
 
   updatePlayerState(players) {
     this.setState({
-      players: getPlayersNewState(players)
+      players: this.getPlayersNewState(players)
     });
   }
 
@@ -132,10 +132,10 @@ class Character extends React.Component {
         id={this.props.id}
         className="character"
         style={{
-          height: 700,
-          width: 350,
+          height: 500,
+          width: 250,
           backgroundImage: "url(" + characterImage + ")",
-          backgroundSize: "contain"
+          backgroundSize: "cover"
         }}
       >
       </div>

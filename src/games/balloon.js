@@ -14,16 +14,23 @@ class BalloonGame {
   }
 
   receiveMessage(ws, msg) {
-    if(msg.action === 'game_action' && msg.action_type === 'pump') {
+    if(msg.action_type === 'pump') {
       this.playerPumpEvent(msg);
+    } else if(msg.action_type === 'pumpUp') {
+      this.playerPumpUpEvent(msg);
     }
+  }
+
+  playerPumpUpEvent(msg) {
+    let id = msg.id - 1;
+    this.playerScore[id].characterState = 0;
+    this.updateScreenState();
   }
 
   playerPumpEvent(msg) {
     let id = msg.id - 1;
     this.playerScore[id].balloonState += 1;
-    this.playerScore[id].characterState += 1;
-    this.playerScore[id].characterState %= 2;
+    this.playerScore[id].characterState = 1;
     this.updateScreenState();
   }
 
