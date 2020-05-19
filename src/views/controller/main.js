@@ -36,6 +36,8 @@ class Container extends React.Component {
       this.forceUpdate();
     } else if(msg.action == 'change_screen') {
       this.changeScreen(msg.screen);
+    } else if(msg.action == 'game_action') {
+      this.client.ongamemessage(msg);
     }
   }
 

@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import './balloon.css';
-import 'react-compound-timer';
+import Timer from 'react-compound-timer';
 
 export default class BalloonGame extends React.Component {
   constructor(props) {
@@ -11,12 +11,15 @@ export default class BalloonGame extends React.Component {
       players: this.getPlayersNewState(this.props.players)
     };
     this.isCountDownCalled = false;
+    this.showTimer = false;
+    this.gameTime = 100 * 1000;
 
     this.comm = this.props.comm;
     this.comm.ongamemessage = (msg) => {
       this.handleMessage(msg);
     };
     this.audio = new Audio('/static/img/Sound/gamebgm.mp3');
+    this.audio.loop = true;
   }
 
   handleMessage(msg) {
@@ -33,6 +36,7 @@ export default class BalloonGame extends React.Component {
 
   stopGame() {
     document.getElementById('countdown').innerHTML = 'STOP !';
+    this.audio.pause();
   }
 
   playMusic() {
@@ -92,6 +96,8 @@ export default class BalloonGame extends React.Component {
     }, 3000);
     setTimeout(() => {
       document.getElementById('countdown').innerHTML = '';
+      this.showTimer = true;
+      this.forceUpdate();
     }, 4000);
 
     return(
@@ -99,10 +105,34 @@ export default class BalloonGame extends React.Component {
     );
   }
 
+  renderTimer() {
+    if(!this.showTimer) return null;
+    this.isTimerCalled = true;
+    return (
+      <div id="timer">
+        <img src="/static/img/Game/time.png" />
+        <div>
+          <Timer
+            initialTime={this.gameTime}
+            direction="backward"
+          >
+            {() => (
+              <React.Fragment>
+                <Timer.Minutes /> :
+                <Timer.Seconds />
+              </React.Fragment>
+            )}
+          </Timer>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     this.playMusic();
     return (
       <div className="row">
+        {this.renderTimer()}
         {this.renderCountDown()}
         {this.renderPlayerSpace(0)}
         {this.renderPlayerSpace(1)}
@@ -148,9 +178,14 @@ class PlayerSpace extends React.Component {
     }
   }
 
+  renderScore() {
+
+  }
+
   render() {
     return (
       <div id={this.props.id} className="player-space col-md-4">
+        {this.renderScore()}
         {this.renderPopEvent()}
         <Character
           id={this.props.id + "-character"}

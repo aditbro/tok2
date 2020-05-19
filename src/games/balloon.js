@@ -9,7 +9,7 @@ class BalloonGame {
     this.balloonIncrementVal = 2;
     this.freezeDuration = 2;
     this.isTimerUp = false;
-    this.gameTime = 10 * 1000;
+    this.gameTime = 100 * 1000;
 
     this.initPlayerData();
     this.initCountDown();
@@ -25,7 +25,7 @@ class BalloonGame {
   initTimer() {
     setTimeout(() => {
       this.stopGame();
-    }, this.gameTime);
+    }, 4000 + this.gameTime);
   }
 
   stopGame() {
@@ -134,9 +134,19 @@ class BalloonGame {
       this.playerScore[id].characterState = 3;
       this.playerScore[id].balloonState = 0;
       this.playerScore[id].freezeUntil = currTimestamp + this.freezeDuration;
+      this.sendPopMsg(id);
     }
 
     this.updateScreenState();
+  }
+
+  sendPopMsg(id) {
+    let msg = {
+      action: 'game_action',
+      type: 'pop'
+    }
+
+    this.players[id].socket.send(JSON.stringify(msg));
   }
 
   updateScreenState() {

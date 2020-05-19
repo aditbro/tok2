@@ -12,8 +12,21 @@ export default class PumpScreen extends React.Component {
     this.motionDetector.onPumpDown = () => {
       this.onPumpDown()
     }
+    this.props.comm.ongamemessage = (msg) => {
+      this.handleMessage(msg);
+    }
     this.motionDetector.start();
     this.pumpState = 'up';
+
+    this.clickAudio = new Audio('/static/img/Sound/click.wav');
+    this.popAudio = new Audio('/static/img/Sound/balloonpopping.wav');
+    this.pumpAudio = new Audio('/static/img/Sound/balloonpumping.mp3');
+  }
+
+  handleMessage(msg) {
+    if(msg.type == 'pop') {
+      this.popAudio.play();
+    }
   }
 
   onPumpUp() {
@@ -37,7 +50,16 @@ export default class PumpScreen extends React.Component {
         id: this.props.playerId
       }
       this.props.comm.send(JSON.stringify(pumpUpMessage));
+      this.playPumpAudio();
     }
+  }
+
+  playPumpAudio() {
+    this.pumpAudio.play();
+    setTimeout(() => {
+      this.pumpAudio.pause();
+      this.pumpAudio.currentTime = 0;
+    }, 400);
   }
 
   onPopClick() {
@@ -48,6 +70,7 @@ export default class PumpScreen extends React.Component {
     }
 
     this.props.comm.send(JSON.stringify(popMessage));
+    this.clickAudio.play();
   }
 
   render() {

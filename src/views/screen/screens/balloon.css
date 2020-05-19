@@ -21,6 +21,30 @@
     font-size: 8em;
 }
 
+#timer {
+    position: absolute;
+    top: 1%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    font-size: 1em;
+}
+
+#timer div {
+    z-index: 3;
+    position: absolute;
+    left: 50%;
+    transform: translate(0%, 50%);
+    color: white;
+    width: 250px;
+}
+
+#timer img {
+    position: absolute;
+    z-index: 2;
+    transform: translate(-50%, -32%);
+    max-width: 250px;
+}
+
 .balloon {
     position: absolute;
     z-index: 1;
