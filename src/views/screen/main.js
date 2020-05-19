@@ -29,8 +29,11 @@ class Container extends React.Component {
     }
   }
 
-  registerPlayer(players) {
+  registerPlayer(msg) {
+    console.log(this);
+    let players = msg.players;
     let ply = this.state.players.slice();
+
     for(let i = 0; i < players.length; i++){
       ply.push({
         id: players[i].id,
@@ -41,26 +44,37 @@ class Container extends React.Component {
     this.setState({
       players: ply
     });
+
+    this.client.ongamemessage(msg);
   }
 
   handleMessage(msg) {
     msg = JSON.parse(msg.data);
     console.log(msg);
-    if(msg.action == 'game_action') {
-      this.client.ongamemessage(msg);
-    } else if(msg.action == 'register_player') {
-      this.registerPlayer(msg.players);
-      this.client.ongamemessage(msg)
-    } else if(msg.action == 'start_game') {
-      $('body').fadeOut("slow", "linear", () => {
-        CurrentScreen = gameSequence[0];
-        this.forceUpdate();
-        console.log(CurrentScreen);
-        console.log(this.state)
-      });
 
-      $('body').fadeIn("fast", "linear");
+    switch(msg.action) {
+      case 'game_action':
+        this.client.ongamemessage(msg);
+        break;
+      case 'register_player':
+        this.registerPlayer(msg);
+        break;
+      case 'start_game':
+        this.startGame(msg);
     }
+  }
+
+  startGame() {
+    let stopMsg = { 'action': 'stop' }
+    this.client.ongamemessage(stopMsg);
+    $('body').fadeOut("slow", "linear", () => {
+      CurrentScreen = gameSequence[0];
+      this.forceUpdate();
+      console.log(CurrentScreen);
+      console.log(this.state)
+    });
+
+    $('body').fadeIn("fast", "linear");
   }
 
   gameFinishedCallback(playersScore) {

@@ -12,10 +12,32 @@ export default class PlayerRegistration extends React.Component {
 
     this.comm = this.props.comm;
     this.comm.ongamemessage = (msg) => {
-      console.log(msg);
-      let players = msg.players;
-      this.updatePlayerState(players);
+      this.handleMessage(msg);
     };
+    this.audio = new Audio('/static/img/Sound/bgm.mp3');
+  }
+
+  handleMessage(msg) {
+    switch(msg.action) {
+      case 'register_player':
+        let players = msg.players;
+        this.updatePlayerState(players);
+        break;
+      case 'stop':
+        this.stopMusic();
+        break;
+    }
+  }
+
+  stopMusic() {
+    this.audio.pause();
+  }
+
+  playMusic() {
+    console.log(this.audio);
+    setTimeout(() => {
+      this.audio.play();
+    }, 500)
   }
 
   updatePlayerState(players) {
@@ -60,7 +82,7 @@ export default class PlayerRegistration extends React.Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="row" onClick={() => { this.playMusic(); } }>
         {this.renderBalloonBG()}
         {this.renderWelcomeScreen()}
         {this.renderPlayerSpace(0)}

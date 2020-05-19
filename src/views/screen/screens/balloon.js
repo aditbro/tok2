@@ -15,7 +15,7 @@ export default class BalloonGame extends React.Component {
       let players = msg.players;
       this.updatePlayerState(players);
     };
-    this.audio = new Audio('/static/img/sound/gamebgm.mp3');
+    this.audio = new Audio('/static/img/Sound/gamebgm.mp3');
   }
 
   playMusic() {
@@ -98,7 +98,7 @@ class PlayerSpace extends React.Component {
 class Balloon extends React.Component {
   constructor(props) {
     super(props);
-    // this.audio = new Audio("/static/img/sound/balloonpumping.mp3");
+    // this.audio = new Audio("/static/img/Sound/balloonpumping.mp3");
   }
 
   // playAudio() {
