@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'vanilla-extract';
+    src: url("/static/font/VanillaExtractRegular.ttf");
+}
+
+.leaderboard-space {
+    height: 100vh;
+    border: 2px solid black;
+}
+
+.score-player{
+    font-family: 'vanilla-extract';
+}
+
+.leaderboard-rank-1 {
+    background-image: url("/static/img/Background/Leaderboard/LEADERBOARD1-gmb.jpg");
+    background-size: contain;
+}
+.leaderboard-rank-2 {
+    background-image: url("/static/img/Background/Leaderboard/LEADERBOARD2-gmb.jpg");
+    background-size: contain;
+}
+.leaderboard-rank-3 {
+    background-image: url("/static/img/Background/Leaderboard/LEADERBOARD3-gmb.jpg");
+    background-size: contain;
+}
