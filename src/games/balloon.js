@@ -4,9 +4,9 @@ class BalloonGame {
     this.screen = screen;
     this.endCallback = endCallback;
     this.playerScore = [];
-    this.balloonMaxThreshold = 12;
+    this.balloonMaxThreshold = 11;
     this.balloonIncrementVal = 2;
-    this.freezeDuration = 1;
+    this.freezeDuration = 5;
     this.initPlayerData();
   }
 
@@ -34,7 +34,10 @@ class BalloonGame {
 
   playerPumpUpEvent(msg) {
     let id = msg.id - 1;
-    this.playerScore[id].characterState = 0;
+    let currTimestamp = new Date() / 1000;
+    if(currTimestamp >= this.playerScore[id].freezeUntil) {
+      this.playerScore[id].characterState = 0;
+    }
     this.updateScreenState();
   }
 
@@ -44,6 +47,8 @@ class BalloonGame {
 
     if(currTimestamp >= this.playerScore[id].freezeUntil) {
       this.playerScore[id].balloonState += this.balloonIncrementVal;
+    } else {
+      return;
     }
 
     if(this.playerScore[id].balloonState <= this.balloonMaxThreshold) {

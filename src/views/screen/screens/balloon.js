@@ -19,7 +19,6 @@ export default class BalloonGame extends React.Component {
   }
 
   playMusic() {
-    console.log(this.audio);
     setTimeout(() => {
       this.audio.play();
     }, 500)
@@ -78,17 +77,33 @@ class PlayerSpace extends React.Component {
     super(props);
   }
 
+  getBalloonState() {
+    if(this.props.characterState == 3) {
+      return 'popped';
+    } else {
+      return this.props.balloonState;
+    }
+  }
+
+  getCharacterState() {
+    if(this.props.characterState == 3) {
+      return 'surprised';
+    } else {
+      return this.props.characterState;
+    }
+  }
+
   render() {
     return (
       <div id={this.props.id} className="player-space col-md-4">
         <Character
           id={this.props.id + "-character"}
-          state={this.props.characterState}
+          state={this.getCharacterState()}
           playerNum={this.props.playerNum}
         />
         <Balloon 
           id={this.props.id + "-balloon"}
-          state={this.props.balloonState}
+          state={this.getBalloonState()}
         />
       </div>
     );
@@ -98,17 +113,10 @@ class PlayerSpace extends React.Component {
 class Balloon extends React.Component {
   constructor(props) {
     super(props);
-    // this.audio = new Audio("/static/img/Sound/balloonpumping.mp3");
   }
 
-  // playAudio() {
-  //   console.log(this.audio);
-  //   this.audio.play();
-  // }
-
   getBalloonImage() {
-    let balloonNum = (this.props.state % 12) + 1;
-    // this.playAudio();
+    let balloonNum = (this.props.state + 1);
     return "/static/img/balloon/" + balloonNum + ".png";
   }
 
@@ -136,11 +144,7 @@ class Character extends React.Component {
   }
 
   getCharacterImage() {
-    if(this.props.state === 0) {
-      return "/static/img/Character/" + this.props.playerNum + "/1.png";
-    } else {
-      return "/static/img/Character/" + this.props.playerNum + "/3.png";
-    }
+    return "/static/img/Character/" + this.props.playerNum + "/" + this.props.state + ".png";
   }
 
   render() {
