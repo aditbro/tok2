@@ -8,7 +8,16 @@ class BalloonGame {
     this.balloonMinThreshold = 8;
     this.balloonIncrementVal = 2;
     this.freezeDuration = 5;
+    this.isTimerUp = false;
+
     this.initPlayerData();
+    this.initCountDown();
+  }
+
+  initCountDown() {
+    setTimeout(() => {
+      this.isTimerUp = true;
+    }, 4000);
   }
 
   initPlayerData() {
@@ -24,6 +33,7 @@ class BalloonGame {
   }
 
   receiveMessage(ws, msg) {
+    if(!this.isTimerUp) return;
     switch(msg.action_type) {
       case 'pump':
         this.playerPumpEvent(msg);

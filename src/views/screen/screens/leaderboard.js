@@ -17,6 +17,7 @@ export default class EndScreen extends React.Component {
       return null;
     }
   }
+  
   getRankForPlayer(id) {
     currentRank = 1
     for (i = 0; i < this.state.players.length; i++) {

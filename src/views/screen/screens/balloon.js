@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import './balloon.css';
+import 'react-compound-timer';
 
 export default class BalloonGame extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class BalloonGame extends React.Component {
     this.state = {
       players: this.getPlayersNewState(this.props.players)
     };
+    this.isCountDownCalled = false;
 
     this.comm = this.props.comm;
     this.comm.ongamemessage = (msg) => {
@@ -62,10 +64,27 @@ export default class BalloonGame extends React.Component {
     }
   }
 
+  renderCountDown() {
+    setTimeout(() => {
+      document.getElementById('countdown').innerHTML = 'SET';
+    }, 2000);
+    setTimeout(() => {
+      document.getElementById('countdown').innerHTML = 'GO!';
+    }, 3500);
+    setTimeout(() => {
+      document.getElementById('countdown').innerHTML = '';
+    }, 4000);
+
+    return(
+      <div id="countdown">READY?</div>
+    );
+  }
+
   render() {
     this.playMusic();
     return (
       <div className="row">
+        {this.renderCountDown()}
         {this.renderPlayerSpace(0)}
         {this.renderPlayerSpace(1)}
         {this.renderPlayerSpace(2)}
