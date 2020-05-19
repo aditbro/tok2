@@ -40,13 +40,23 @@ export default class PumpScreen extends React.Component {
     }
   }
 
+  onPopClick() {
+    let popMessage = {
+      action: "game_action",
+      action_type: "pop",
+      id: this.props.playerId
+    }
+
+    this.props.comm.send(JSON.stringify(popMessage));
+  }
+
   render() {
     return (
       <div className="row">
         <div className="col-md-12">
           <h1 id="pump-title">Pump!</h1>
           <h2 id="pump-player-id">Player-{this.props.playerId}</h2>
-          <div id="pump-btn-ok"></div>
+          <div onClick={() => {this.onPopClick()}} id="pump-btn-ok"></div>
         </div>
       </div>
     )

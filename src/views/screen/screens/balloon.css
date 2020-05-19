@@ -11,6 +11,26 @@
     transform: translate(-50%, -50%);
 }
 
+@keyframes FadeAnimation {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.pop-event {
+    position: absolute;
+    top: 30%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    animation: FadeAnimation 1s ease-in .2s forwards;
+}
+
 .character {
     position: absolute;
     top: 59%;

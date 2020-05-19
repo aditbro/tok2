@@ -39,6 +39,7 @@ export default class BalloonGame extends React.Component {
         balloonState: players[i].balloonState ? players[i].balloonState : 0,
         balloonScore: players[i].balloonScore ? players[i].balloonScore : 0,
         characterState: players[i].characterState ? players[i].characterState : 0,
+        popEvent: players[i].popEvent ? players[i].popEvent : 0,
       });
     }
 
@@ -54,6 +55,7 @@ export default class BalloonGame extends React.Component {
         score={this.state.players[id].score}
         balloonState={this.state.players[id].balloonState}
         characterState={this.state.players[id].characterState}
+        popEvent={this.state.players[id].popEvent}
       />
     } else {
       return null;
@@ -93,9 +95,25 @@ class PlayerSpace extends React.Component {
     }
   }
 
+  renderPopEvent() {
+    let popId = 'pop-' + this.props.id;
+    if(this.props.popEvent == 1) {
+      return (
+        <h1 id={popId} className="pop-event">+1</h1>
+      )
+    } else if(this.props.popEvent == 2) {
+      return (
+        <h1 id={popId} className="pop-event">+0</h1>
+      )
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <div id={this.props.id} className="player-space col-md-4">
+        {this.renderPopEvent()}
         <Character
           id={this.props.id + "-character"}
           state={this.getCharacterState()}

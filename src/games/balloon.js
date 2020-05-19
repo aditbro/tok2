@@ -5,6 +5,7 @@ class BalloonGame {
     this.endCallback = endCallback;
     this.playerScore = [];
     this.balloonMaxThreshold = 11;
+    this.balloonMinThreshold = 8;
     this.balloonIncrementVal = 2;
     this.freezeDuration = 5;
     this.initPlayerData();
@@ -16,7 +17,8 @@ class BalloonGame {
         balloonState: 0,
         balloonScore: 0,
         characterState: 0,
-        freezeUntil: 0
+        freezeUntil: 0,
+        popEvent: false
       });
     };
   }
@@ -29,6 +31,27 @@ class BalloonGame {
       case 'pumpUp':
         this.playerPumpUpEvent(msg);
         break;
+      case 'pop':
+        this.playerPopEvent(msg);
+        break;
+    }
+  }
+
+  playerPopEvent(msg) {
+    let id = msg.id - 1;
+    console.log('pop event');
+
+    if(this.playerScore[id].balloonState >= this.balloonMinThreshold) {
+      this.playerScore[id].balloonState = 0;
+      this.playerScore[id].balloonScore += 1;
+      this.playerScore[id].popEvent = 1;
+      this.updateScreenState();
+      this.playerScore[id].popEvent = 0;
+    } else {
+      this.playerScore[id].balloonState = 0;
+      this.playerScore[id].popEvent = 2;
+      this.updateScreenState();
+      this.playerScore[id].popEvent = 0;
     }
   }
 
