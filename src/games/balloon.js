@@ -1,7 +1,7 @@
 class BalloonGame {
-  constructor(players, screen, endCallback){
+  constructor(players, screens, endCallback){
     this.players = players;
-    this.screen = screen;
+    this.screens = screens;
     this.endCallback = endCallback;
     this.playerScore = [];
     this.balloonMaxThreshold = 11;
@@ -9,15 +9,51 @@ class BalloonGame {
     this.balloonIncrementVal = 2;
     this.freezeDuration = 5;
     this.isTimerUp = false;
+    this.gameTime = 6 * 1000;
 
     this.initPlayerData();
     this.initCountDown();
+    this.initTimer();
   }
 
   initCountDown() {
     setTimeout(() => {
       this.isTimerUp = true;
     }, 4000);
+  }
+
+  initTimer() {
+    setTimeout(() => {
+      this.stopGame();
+    }, this.gameTime);
+  }
+
+  stopGame() {
+    this.isTimerUp = false;
+    this.stopScreen();
+    let playerScore = this.calculatePlayerScore();
+    this.endCallback(playerScore);
+  }
+
+  stopScreen() {
+    let stopMsg = {action: 'game_action', type: 'stop'}
+    this.screens.forEach((screen) => {
+      screen.socket.send(JSON.stringify(stopMsg));
+    });
+  }
+
+  calculatePlayerScore() {
+    let totalScore = 0;
+    let playerScores = [];
+    this.players.forEach((player) => {
+      totalScore += player.playerScore;
+    });
+
+    for(let i = 0; i < this.players.length; i++) {
+      playerScores.push((100 / totalScore) * this.players[i].balloonScore);
+    }
+
+    return playerScores;
   }
 
   initPlayerData() {
@@ -98,6 +134,7 @@ class BalloonGame {
   updateScreenState() {
     let msgToScreen = {
       action: 'game_action',
+      type: 'player_update',
       players: []
     }
     for(let i = 0; i < this.players.length; i++) {
@@ -109,7 +146,9 @@ class BalloonGame {
       });
     }
 
-    this.screen.socket.send(JSON.stringify(msgToScreen));
+    this.screens.forEach((screen) => {
+      screen.socket.send(JSON.stringify(msgToScreen));
+    });
   }
 }
 

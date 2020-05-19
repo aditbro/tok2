@@ -3,7 +3,7 @@ const BalloonGame = require('./balloon');
 class GameController {
   constructor() {
     this.players = [];
-    this.screen;
+    this.screens = [];
     this.currentGame;
     this.state = 'registering_player';
   }
@@ -18,9 +18,7 @@ class GameController {
     } else if(msg.action == 'start_game') {
       this.state = 'in_game';
       this.assignGame(BalloonGame);
-      this.screen.socket.send(JSON.stringify(
-        {"action": "start_game"}
-      ))
+      this.sendToScreen(JSON.stringify({"action": "start_game"}));
       this.players.forEach((player) => {
         let msg = {"action": "change_screen", "screen": "pump"}
         player.socket.send(JSON.stringify(msg));
@@ -29,9 +27,9 @@ class GameController {
   }
 
   addScreen(ws) {
-    this.screen = { socket: ws }
+    this.screens.push({ socket: ws });
     let success_response = { message: "screen registered" };
-    this.screen.socket.send(JSON.stringify(success_response));
+    ws.send(JSON.stringify(success_response));
   }
 
   registerPlayersToScreen() {
@@ -47,11 +45,17 @@ class GameController {
     }
 
     try {
-      this.screen.socket.send(JSON.stringify(msg));
+      this.sendToScreen(JSON.stringify(msg));
       console.log(msg);
     } catch(e) {
       console.log(e);
     }
+  }
+
+  sendToScreen(msg) {
+    this.screens.forEach((screen) => {
+      screen.socket.send(msg);        
+    });
   }
 
   addPlayer(ws) {
@@ -92,7 +96,10 @@ class GameController {
   }
 
   assignGame(game) {
-    this.currentGame = new game(this.players, this.screen, this.handleGameFinish);
+    this.currentGame = new game(
+      this.players,
+      this.screens,
+      (scores) => {this.handleGameFinish(scores)});
   }
 }
 

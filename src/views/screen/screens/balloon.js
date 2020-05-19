@@ -14,10 +14,24 @@ export default class BalloonGame extends React.Component {
 
     this.comm = this.props.comm;
     this.comm.ongamemessage = (msg) => {
-      let players = msg.players;
-      this.updatePlayerState(players);
+      this.handleMessage(msg);
     };
     this.audio = new Audio('/static/img/Sound/gamebgm.mp3');
+  }
+
+  handleMessage(msg) {
+    switch(msg.type) {
+      case 'player_update':
+        let players = msg.players;
+        this.updatePlayerState(players);
+        break;
+      case 'stop':
+        this.stopGame();
+    }
+  }
+
+  stopGame() {
+    document.getElementById('countdown').innerHTML = 'STOP !';
   }
 
   playMusic() {
@@ -69,7 +83,7 @@ export default class BalloonGame extends React.Component {
       document.getElementById('countdown').innerHTML = 'SET';
     }, 2000);
     setTimeout(() => {
-      document.getElementById('countdown').innerHTML = 'GO!';
+      document.getElementById('countdown').innerHTML = 'GO!!';
     }, 3500);
     setTimeout(() => {
       document.getElementById('countdown').innerHTML = '';
