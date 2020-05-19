@@ -7,9 +7,9 @@ class BalloonGame {
     this.balloonMaxThreshold = 11;
     this.balloonMinThreshold = 8;
     this.balloonIncrementVal = 2;
-    this.freezeDuration = 5;
+    this.freezeDuration = 2;
     this.isTimerUp = false;
-    this.gameTime = 6 * 1000;
+    this.gameTime = 10 * 1000;
 
     this.initPlayerData();
     this.initCountDown();
@@ -29,10 +29,13 @@ class BalloonGame {
   }
 
   stopGame() {
-    this.isTimerUp = false;
+    this.isTimerUp = true;
     this.stopScreen();
     let playerScore = this.calculatePlayerScore();
-    this.endCallback(playerScore);
+    console.log(playerScore)
+    setTimeout(() => {
+      this.endCallback(playerScore);
+    }, 1000);
   }
 
   stopScreen() {
@@ -45,12 +48,17 @@ class BalloonGame {
   calculatePlayerScore() {
     let totalScore = 0;
     let playerScores = [];
-    this.players.forEach((player) => {
-      totalScore += player.playerScore;
+    this.playerScore.forEach((player) => {
+      console.log(player.balloonScore);
+      totalScore += player.balloonScore;
     });
+    if(totalScore <= 0) {
+      totalScore = 1;
+    }
 
     for(let i = 0; i < this.players.length; i++) {
-      playerScores.push((100 / totalScore) * this.players[i].balloonScore);
+      console.log(this.playerScore[i].balloonScore);
+      playerScores.push((100 / totalScore) * this.playerScore[i].balloonScore);
     }
 
     return playerScores;

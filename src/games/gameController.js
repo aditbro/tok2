@@ -58,6 +58,12 @@ class GameController {
     });
   }
 
+  sendToPlayer(msg) {
+    this.players.forEach((player) => {
+      player.socket.send(msg);
+    });
+  }
+
   addPlayer(ws) {
     if(this.players.length >= 3 || this.state != 'registering_player') {
       let response = { message: "player registration rejected" };
@@ -81,6 +87,16 @@ class GameController {
     for(let i = 0; i < this.players.length; i++) {
       this.players[i].score += score[i];
     }
+
+    let msg = {
+      action: 'show_leaderboards',
+      players: this.players
+    }
+
+    setTimeout(() => {
+      this.sendToScreen(JSON.stringify(msg));
+      this.sendToPlayer(JSON.stringify(msg));
+    }, 1000);
   }
 
   createNewPlayer(ws) {

@@ -27,6 +27,7 @@ export default class BalloonGame extends React.Component {
         break;
       case 'stop':
         this.stopGame();
+        break;
     }
   }
 
@@ -63,28 +64,32 @@ export default class BalloonGame extends React.Component {
   }
 
   renderPlayerSpace(id) {
-    console.log(this.state.players)
-    if(this.state.players[id]){
-      return <PlayerSpace
-        id={"player-" + (id + 1)}
-        playerNum={id + 1}
-        score={this.state.players[id].score}
-        balloonState={this.state.players[id].balloonState}
-        characterState={this.state.players[id].characterState}
-        popEvent={this.state.players[id].popEvent}
-      />
-    } else {
-      return null;
-    }
+    console.log(this.state.players);
+    if(id >= this.props.players.length) return null;
+
+    return <PlayerSpace
+      id={"player-" + (id + 1)}
+      playerNum={id + 1}
+      score={this.state.players[id].score}
+      balloonState={this.state.players[id].balloonState}
+      characterState={this.state.players[id].characterState}
+      popEvent={this.state.players[id].popEvent}
+    />
   }
 
   renderCountDown() {
+    if(this.isCountDownCalled) {
+      return (
+        <div id="countdown"></div>
+      );
+    }
+    this.isCountDownCalled = true;
     setTimeout(() => {
       document.getElementById('countdown').innerHTML = 'SET';
-    }, 2000);
+    }, 1500);
     setTimeout(() => {
       document.getElementById('countdown').innerHTML = 'GO!!';
-    }, 3500);
+    }, 3000);
     setTimeout(() => {
       document.getElementById('countdown').innerHTML = '';
     }, 4000);

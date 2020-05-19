@@ -2,7 +2,8 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BalloonGame from './screens/balloon.js';
-import PlayerRegistration from './screens/playerRegistration.js'
+import PlayerRegistration from './screens/playerRegistration.js';
+import LeaderBoard from './screens/leaderboard.js';
 import client from './connection.js';
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -30,9 +31,8 @@ class Container extends React.Component {
   }
 
   registerPlayer(msg) {
-    console.log(this);
     let players = msg.players;
-    let ply = this.state.players.slice();
+    let ply = [];
 
     for(let i = 0; i < players.length; i++){
       ply.push({
@@ -61,6 +61,10 @@ class Container extends React.Component {
         break;
       case 'start_game':
         this.startGame(msg);
+        break;
+      case 'show_leaderboards':
+        this.switchToLeaderBoard(msg);
+        break;
     }
   }
 
@@ -77,18 +81,11 @@ class Container extends React.Component {
     $('body').fadeIn("fast", "linear");
   }
 
-  gameFinishedCallback(playersScore) {
-    let ply = this.state.players.slice();
-    for(let i = 0; i < playersScore.length; i++) {
-      ply[i].score += playersScore[i]
-    }
-
-    gameSequenceIndex++;
-    CurrentScreen = gameSequence[gameSequenceIndex];
-
-    this.setState({
-      players: ply
-    });
+  switchToLeaderBoard(msg) {
+    CurrentScreen = LeaderBoard;
+    this.state.players = [];
+    this.registerPlayer(msg);
+    this.forceUpdate();
   }
 
   render() {

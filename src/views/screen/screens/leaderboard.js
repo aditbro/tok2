@@ -1,38 +1,40 @@
+'use strict';
+import React from 'react';
 import "./leaderboard.css"
 
-export default class EndScreen extends React.Component {
+export default class LeaderBoard extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  renderLeaderboardSpace(id) {
-    if (this.state.players[id]) {
-      return (
-        <LeaderboardSpace
-          id={"player-" + (id + 1)}
-          rank={this.getRankForPlayer(id + 1)}
-        />
-      )
-    } else {
-      return null;
-    }
+  renderLeaderboardSpace(id, rank) {
+    if(!rank) return null;
+    return (
+      <LeaderboardSpace
+        id={id}
+        rank={rank}
+        score={this.props.players[id].score}
+      />
+    )
   }
-  
+
   getRankForPlayer(id) {
-    currentRank = 1
-    for (i = 0; i < this.state.players.length; i++) {
-      if (this.state.players[i].score > this.state.players[id].score) {
+    if(id >= this.props.players.length) return null;
+    let currentRank = 1
+    for (let i = 0; i < this.props.players.length; i++) {
+      if (this.props.players[i].score > this.props.players[id].score) {
         currentRank++;
       }
     }
     return currentRank;
   }
+
   render() {
     return (
       <div className="row">
-        {this.renderLeaderboardSpace(getRankForPlayer(1))}
-        {this.renderLeaderboardSpace(getRankForPlayer(2))}
-        {this.renderLeaderboardSpace(getRankForPlayer(3))}
+        {this.renderLeaderboardSpace(0, this.getRankForPlayer(0))}
+        {this.renderLeaderboardSpace(1, this.getRankForPlayer(1))}
+        {this.renderLeaderboardSpace(2, this.getRankForPlayer(2))}
       </div>
     );
   }
@@ -45,15 +47,12 @@ class LeaderboardSpace extends React.Component {
   }
 
   render() {
-    className = "leaderboard-rank-" + this.props.rank;
+    let componentId = "leaderboard-rank-" + this.props.rank;
+    let className = "leaderboard-space col-md-4";
     return (
-      <div id={this.props.id} className="leaderboard-space col-md-4">
-        <div
-          id={"leaderboard-" + this.props.id}
-          className={this.className}
-        />
+      <div id={componentId} className={className}>
         <Score
-          score={this.state.players[id].score}
+          score={this.props.score}
         />
       </div>
     );
@@ -72,7 +71,7 @@ class Score extends React.Component {
         className="score-player"
       >
         {/* {"Score: " + this.props.score} */}
-        {"Score: " + 100}
+        {"Score: " + this.props.score}
       </div>
     )
   }
