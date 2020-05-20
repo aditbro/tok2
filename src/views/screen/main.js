@@ -73,7 +73,7 @@ class Container extends React.Component {
     this.client.ongamemessage(stopMsg);
     setTimeout(() => {
       this.changeScreen();
-    })
+    }, 1000)
   }
 
   changeScreen() {
