@@ -1,6 +1,6 @@
 import websocket from 'websocket';
 
-const gameServer = "wss://localhost:8080";
+const gameServer = "wss://" + window.location.host;;
 const client = new websocket.w3cwebsocket(gameServer, null, null, null);
 
 client.onopen = function() {
