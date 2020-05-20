@@ -7,8 +7,8 @@ const GameController = require('./games/gameController');
 controller = new GameController();
 
 const options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+  key: fs.readFileSync('ssl/server.key'),
+  cert: fs.readFileSync('ssl/server.cert')
 };
 
 const server = http.createServer(options, function (req, res) {
