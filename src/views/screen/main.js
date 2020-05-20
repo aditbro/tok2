@@ -71,6 +71,12 @@ class Container extends React.Component {
   startGame() {
     let stopMsg = { 'action': 'stop' }
     this.client.ongamemessage(stopMsg);
+    setTimeout(() => {
+      this.changeScreen();
+    })
+  }
+
+  changeScreen() {
     $('body').fadeOut("slow", "linear", () => {
       CurrentScreen = gameSequence[0];
       this.forceUpdate();

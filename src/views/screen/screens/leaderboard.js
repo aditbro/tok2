@@ -71,7 +71,7 @@ class Score extends React.Component {
         className="score-player"
       >
         {/* {"Score: " + this.props.score} */}
-        {"Score: " + this.props.score}
+        {"Score: " + this.props.score.toFixed(0)}
       </div>
     )
   }
