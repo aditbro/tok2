@@ -30,6 +30,7 @@ class GameController {
     this.screens.push({ socket: ws });
     let success_response = { message: "screen registered" };
     ws.send(JSON.stringify(success_response));
+    this.registerPlayersToScreen();
   }
 
   registerPlayersToScreen() {
