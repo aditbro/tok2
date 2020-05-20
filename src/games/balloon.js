@@ -9,7 +9,7 @@ class BalloonGame {
     this.balloonIncrementVal = 2;
     this.freezeDuration = 2;
     this.isTimerUp = false;
-    this.gameTime = 80 * 1000;
+    this.gameTime = 81 * 1000;
 
     this.initPlayerData();
     this.initCountDown();
