@@ -27,6 +27,7 @@
     left: 50%;
     transform: translate(-50%, 0%);
     font-size: 1em;
+    z-index: 3;
 }
 
 #timer div {
@@ -93,4 +94,28 @@
 #player-3 {
     background-image: url("/static/img/Background/bg3.jpg");
     background-size: contain;
+}
+
+.character-score {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    font-size: 1em;
+}
+
+.character-score div {
+    z-index: 3;
+    position: absolute;
+    left: 50%;
+    transform: translate(0%, 50%);
+    color: white;
+    width: 250px;
+}
+
+.character-score img {
+    position: absolute;
+    z-index: 2;
+    transform: translate(-50%, -32%);
+    max-width: 250px;
 }

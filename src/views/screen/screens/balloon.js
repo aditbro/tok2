@@ -12,7 +12,7 @@ export default class BalloonGame extends React.Component {
     };
     this.isCountDownCalled = false;
     this.showTimer = false;
-    this.gameTime = 100 * 1000;
+    this.gameTime = 80 * 1000;
 
     this.comm = this.props.comm;
     this.comm.ongamemessage = (msg) => {
@@ -35,8 +35,8 @@ export default class BalloonGame extends React.Component {
   }
 
   stopGame() {
-    document.getElementById('countdown').innerHTML = 'STOP !';
     this.audio.pause();
+    document.getElementById('countdown').innerHTML = 'STOP !';
   }
 
   playMusic() {
@@ -74,7 +74,7 @@ export default class BalloonGame extends React.Component {
     return <PlayerSpace
       id={"player-" + (id + 1)}
       playerNum={id + 1}
-      score={this.state.players[id].score}
+      score={this.state.players[id].balloonScore}
       balloonState={this.state.players[id].balloonState}
       characterState={this.state.players[id].characterState}
       popEvent={this.state.players[id].popEvent}
@@ -92,7 +92,7 @@ export default class BalloonGame extends React.Component {
       document.getElementById('countdown').innerHTML = 'SET';
     }, 1500);
     setTimeout(() => {
-      document.getElementById('countdown').innerHTML = 'GO!!';
+      document.getElementById('countdown').innerHTML = 'PUMP!!';
     }, 3000);
     setTimeout(() => {
       document.getElementById('countdown').innerHTML = '';
@@ -115,6 +115,26 @@ export default class BalloonGame extends React.Component {
           <Timer
             initialTime={this.gameTime}
             direction="backward"
+            checkpoints={[
+              {
+                time: 30 * 1000,
+                callback: () => {
+                  document.getElementById('countdown').innerHTML = '30s';
+                  setTimeout(() => {
+                    document.getElementById('countdown').innerHTML = '';
+                  }, 1000);
+                },
+              },
+              {
+                time: 10 * 1000,
+                callback: () => {
+                  document.getElementById('countdown').innerHTML = '10s';
+                  setTimeout(() => {
+                    document.getElementById('countdown').innerHTML = '';
+                  }, 1000);
+                },
+              }
+            ]}
           >
             {() => (
               <React.Fragment>
@@ -179,7 +199,13 @@ class PlayerSpace extends React.Component {
   }
 
   renderScore() {
-
+    let className = "character-score";
+    return (
+      <div className={className}>
+        <img src="/static/img/Game/score.png" />
+        <div>{this.props.score}</div>
+      </div>
+    );
   }
 
   render() {

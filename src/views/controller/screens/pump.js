@@ -59,7 +59,7 @@ export default class PumpScreen extends React.Component {
     setTimeout(() => {
       this.pumpAudio.pause();
       this.pumpAudio.currentTime = 0;
-    }, 400);
+    }, 200);
   }
 
   onPopClick() {
